@@ -1,0 +1,39 @@
+{
+  "name": "Excel_Workbook_CriticalPath",
+  "description": "Blank Project",
+  "main": "Workbook_Main.xaml",
+  "dependencies": {
+    "UiPath.Excel.Activities": "[2.5.3]",
+    "UiPath.System.Activities": "[19.4.0]",
+    "UiPath.UIAutomation.Activities": "[19.4.1]",
+    "WF_Tools": "1.0.7066.19584"
+  },
+  "schemaVersion": "3.2",
+  "studioVersion": "18.1.6527.12951",
+  "projectVersion": "1.0.6971.20872",
+  "runtimeOptions": {
+    "autoDispose": false,
+    "isPausable": true,
+    "excludedLoggedData": [
+      "Private:*",
+      "*password*"
+    ]
+  },
+  "projectType": "Workflow",
+  "libraryOptions": {
+    "includeOriginalXaml": false,
+    "privateWorkflows": []
+  },
+  "arguments": {
+    "input": [
+      {
+        "name": "filePath",
+        "type": "System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089",
+        "required": false,
+        "hasDefault": true
+      }
+    ],
+    "output": []
+  },
+  "webServices": []
+}

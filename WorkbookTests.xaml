@@ -1,0 +1,528 @@
+﻿<Activity mc:Ignorable="sap sap2010 sads" x:Class="xls"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sd="clr-namespace:System.Data;assembly=System.Data"
+ xmlns:ui="http://schemas.uipath.com/workflow/activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="Suffix" Type="InArgument(x:String)" />
+    <x:Property Name="Path" Type="InArgument(x:String)" />
+    <x:Property Name="ExcList" Type="OutArgument(scg:List(x:String))" />
+  </x:Members>
+  <mva:VisualBasic.Settings>
+    <x:Null />
+  </mva:VisualBasic.Settings>
+  <sap2010:WorkflowViewState.IdRef>xls_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System.Activities</x:String>
+      <x:String>System.Activities.Statements</x:String>
+      <x:String>System.Activities.Expressions</x:String>
+      <x:String>System.Activities.Validation</x:String>
+      <x:String>System.Activities.XamlIntegration</x:String>
+      <x:String>Microsoft.VisualBasic</x:String>
+      <x:String>Microsoft.VisualBasic.Activities</x:String>
+      <x:String>System</x:String>
+      <x:String>System.Collections</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Diagnostics</x:String>
+      <x:String>System.Drawing</x:String>
+      <x:String>System.IO</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Net.Mail</x:String>
+      <x:String>System.Xml</x:String>
+      <x:String>System.Xml.Linq</x:String>
+      <x:String>UiPath.Core</x:String>
+      <x:String>UiPath.Core.Activities</x:String>
+      <x:String>System.Windows.Markup</x:String>
+      <x:String>Microsoft.VisualBasic.CompilerServices</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>Microsoft.VisualBasic</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Drawing</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities</AssemblyReference>
+      <AssemblyReference>UiPath.Excel</AssemblyReference>
+      <AssemblyReference>System.ValueTuple</AssemblyReference>
+      <AssemblyReference>UiPath.Studio.Plugin.Workflow</AssemblyReference>
+      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Sequence sap2010:WorkflowViewState.IdRef="Sequence_4">
+    <Sequence.Variables>
+      <Variable x:TypeArguments="ui:GenericValue" Name="res" />
+      <Variable x:TypeArguments="x:String" Name="range" />
+      <Variable x:TypeArguments="sd:DataTable" Name="datatable" />
+      <Variable x:TypeArguments="x:String" Name="formula" />
+      <Variable x:TypeArguments="scg:IEnumerable(x:Object)" Name="column" />
+      <Variable x:TypeArguments="scg:IEnumerable(x:Object)" Name="row" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="res1" />
+      <Variable x:TypeArguments="ui:GenericValue" Name="password" />
+      <Variable x:TypeArguments="scg:List(x:String)" Default="[new List (of String)]" Name="exceptionsList" />
+      <Variable x:TypeArguments="x:String" Name="exc" />
+    </Sequence.Variables>
+    <Sequence DisplayName="TestActions" sap2010:WorkflowViewState.IdRef="Sequence_1">
+      <Sequence.Variables>
+        <Variable x:TypeArguments="x:String" Name="getRangeRes" />
+      </Sequence.Variables>
+      <If Condition="[(&quot;SourceFile&quot;+Suffix).Contains(&quot;P&quot;) or (&quot;Test&quot;+Suffix).Contains(&quot;P&quot;)]" sap2010:WorkflowViewState.IdRef="If_12">
+        <If.Then>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_1">
+            <Assign.To>
+              <OutArgument x:TypeArguments="ui:GenericValue">[password]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="ui:GenericValue">["123456"]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Then>
+        <If.Else>
+          <Assign sap2010:WorkflowViewState.IdRef="Assign_2">
+            <Assign.To>
+              <OutArgument x:TypeArguments="ui:GenericValue">[password]</OutArgument>
+            </Assign.To>
+            <Assign.Value>
+              <InArgument x:TypeArguments="ui:GenericValue">[""]</InArgument>
+            </Assign.Value>
+          </Assign>
+        </If.Else>
+      </If>
+      <ui:ReadCell Cell="A1" DisplayName="Read cell" sap2010:WorkflowViewState.IdRef="ReadCell_1" Password="[password]" SheetName="Sheet1" WorkbookPath="[Path+&quot;\SourceFile&quot;+Suffix]">
+        <ui:ReadCell.Result>
+          <OutArgument x:TypeArguments="ui:GenericValue">[res]</OutArgument>
+        </ui:ReadCell.Result>
+      </ui:ReadCell>
+      <If Condition="[res=&quot;test1&quot;]" sap2010:WorkflowViewState.IdRef="If_1">
+        <If.Then>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_1" Level="Info" Message="[&quot;Workbook-&gt; Read Cell using SourceFile&quot; + Suffix + &quot; - ok&quot;]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_2">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_1" Item="[&quot;Workbook-&gt; Read Cell using SourceFile&quot; + Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_2" Level="Error" Message="[&quot;Workbook-&gt; Read Cell using SourceFile&quot; + Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Else>
+      </If>
+      <ui:WriteCell Cell="A1" DisplayName="Write cell" sap2010:WorkflowViewState.IdRef="WriteCell_1" Password="[password]" SheetName="Sheet1" Text="test" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]" />
+      <ui:ReadCell Cell="A1" DisplayName="Read cell" sap2010:WorkflowViewState.IdRef="ReadCell_8" Password="[password]" SheetName="Sheet1" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]">
+        <ui:ReadCell.Result>
+          <OutArgument x:TypeArguments="ui:GenericValue">[res]</OutArgument>
+        </ui:ReadCell.Result>
+      </ui:ReadCell>
+      <If Condition="[res=&quot;test&quot;]" sap2010:WorkflowViewState.IdRef="If_2">
+        <If.Then>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_3" Level="Info" Message="[&quot;Workbook-&gt;Write Cell (existing sheet) using Test&quot;+ Suffix + &quot; - ok&quot;]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_5">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_2" Item="[&quot;Workbook-&gt;Write Cell (existing sheet) using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_4" Level="Error" Message="[&quot;Workbook-&gt;Write Cell (existing sheet) using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Else>
+      </If>
+      <ui:WriteCell Cell="A1" DisplayName="Write cell" sap2010:WorkflowViewState.IdRef="WriteCell_2" Password="[password]" SheetName="new" Text="test" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]" />
+      <ui:ReadCell Cell="A1" DisplayName="Read cell" sap2010:WorkflowViewState.IdRef="ReadCell_3" Password="[password]" SheetName="new" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]">
+        <ui:ReadCell.Result>
+          <OutArgument x:TypeArguments="ui:GenericValue">[res1]</OutArgument>
+        </ui:ReadCell.Result>
+      </ui:ReadCell>
+      <If Condition="[res1=&quot;test&quot;]" sap2010:WorkflowViewState.IdRef="If_3">
+        <If.Then>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_5" Level="Info" Message="[&quot;Workbook-&gt;Write Cell (new sheet) using Test&quot;+ Suffix + &quot; - ok&quot;]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_6">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_3" Item="[&quot;Workbook-&gt;Write Cell (new sheet) using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_6" Level="Error" Message="[&quot;Workbook-&gt;Write Cell (new sheet) using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Else>
+      </If>
+      <ui:ReadRange AddHeaders="False" DataTable="[datatable]" DisplayName="Read range" sap2010:WorkflowViewState.IdRef="ReadRange_1" Password="[password]" Range="A1:C5" SheetName="Sheet1" WorkbookPath="[Path+&quot;\SourceFile&quot;+Suffix]" />
+      <If Condition="[datatable is nothing]" sap2010:WorkflowViewState.IdRef="If_5">
+        <If.Then>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_7">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_4" Item="[&quot;Workbook-&gt;Read Range using SourceFile&quot;+ Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_9" Level="Error" Message="[&quot;Workbook-&gt;Read Range using SourceFile&quot;+ Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Then>
+        <If.Else>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_10" Level="Info" Message="[&quot;Workbook-&gt;Read Range using SourceFile&quot;+ Suffix + &quot; - ok&quot;]" />
+        </If.Else>
+      </If>
+      <ui:WriteRange AddHeaders="False" DataTable="[datatable]" DisplayName="Write range" sap2010:WorkflowViewState.IdRef="WriteRange_1" Password="[password]" SheetName="Sheet1" StartingCell="A2" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]" />
+      <ui:ReadCell Cell="C6" DisplayName="Read cell" sap2010:WorkflowViewState.IdRef="ReadCell_4" Password="[password]" SheetName="Sheet1" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]">
+        <ui:ReadCell.Result>
+          <OutArgument x:TypeArguments="ui:GenericValue">[res]</OutArgument>
+        </ui:ReadCell.Result>
+      </ui:ReadCell>
+      <If Condition="[res=&quot;test5&quot;]" sap2010:WorkflowViewState.IdRef="If_6">
+        <If.Then>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_11" Level="Info" Message="[&quot;Workbook-&gt;Write Range (existing sheet) using Test&quot;+ Suffix + &quot; - ok&quot;]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_8">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_5" Item="[&quot;Workbook-&gt;Write Range (existing sheet) using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_12" Level="Error" Message="[&quot;Workbook-&gt;Write Range (existing sheet) using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Else>
+      </If>
+      <ui:WriteRange AddHeaders="False" DataTable="[datatable]" DisplayName="Write range" sap2010:WorkflowViewState.IdRef="WriteRange_2" Password="[password]" SheetName="new1" StartingCell="A2" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]" />
+      <ui:ReadCell Cell="C6" DisplayName="Read cell" sap2010:WorkflowViewState.IdRef="ReadCell_5" Password="[password]" SheetName="new1" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]">
+        <ui:ReadCell.Result>
+          <OutArgument x:TypeArguments="ui:GenericValue">[res1]</OutArgument>
+        </ui:ReadCell.Result>
+      </ui:ReadCell>
+      <If Condition="[res=&quot;test5&quot;]" sap2010:WorkflowViewState.IdRef="If_7">
+        <If.Then>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_13" Level="Info" Message="[&quot;Workbook-&gt;Write Range (new sheet) using Test&quot;+ Suffix + &quot; - ok&quot;]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_9">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_6" Item="[&quot;Workbook-&gt;Write Range (new sheet) using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_14" Level="Error" Message="[&quot;Workbook-&gt;Write Range (new sheet) using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Else>
+      </If>
+      <ui:AppendRange DataTable="[datatable]" DisplayName="Append range" sap2010:WorkflowViewState.IdRef="AppendRange_1" Password="[password]" SheetName="Sheet1" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]" />
+      <ui:ReadCell Cell="C11" DisplayName="Read cell" sap2010:WorkflowViewState.IdRef="ReadCell_6" Password="[password]" SheetName="Sheet1" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]">
+        <ui:ReadCell.Result>
+          <OutArgument x:TypeArguments="ui:GenericValue">[res]</OutArgument>
+        </ui:ReadCell.Result>
+      </ui:ReadCell>
+      <If Condition="[res=&quot;test5&quot;]" sap2010:WorkflowViewState.IdRef="If_8">
+        <If.Then>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_15" Level="Info" Message="[&quot;Workbook-&gt; Append Range using Test&quot;+ Suffix + &quot; - ok&quot;]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_10">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_7" Item="[&quot;Workbook-&gt; Append Range using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_16" Level="Error" Message="[&quot;Workbook-&gt; Append Range using Test&quot;+ Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Else>
+      </If>
+      <ui:ReadCellFormula Cell="B1" DisplayName="Read cell formula" sap2010:WorkflowViewState.IdRef="ReadCellFormula_1" Password="[password]" Result="[formula]" SheetName="Sheet1" WorkbookPath="[Path+&quot;\SourceFile&quot;+Suffix]" />
+      <If Condition="[formula=&quot;A1&quot;]" sap2010:WorkflowViewState.IdRef="If_9">
+        <If.Then>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_17" Level="Info" Message="[&quot;Workbook-&gt; Read Cell Formula using SourceFile&quot; + Suffix + &quot; - ok&quot;]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_11">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_8" Item="[&quot;Workbook-&gt; Read Cell Formula using SourceFile&quot; + Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_18" Level="Error" Message="[&quot;Workbook-&gt; Read Cell Formula using SourceFile&quot; + Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Else>
+      </If>
+      <ui:ReadColumn DisplayName="Read column" sap2010:WorkflowViewState.IdRef="ReadColumn_1" Password="[password]" Result="[column]" SheetName="Sheet1" StartingCell="C1" WorkbookPath="[Path+&quot;\SourceFile&quot;+Suffix]" />
+      <If Condition="[column(0).toString=&quot;test1test1&quot;]" sap2010:WorkflowViewState.IdRef="If_10">
+        <If.Then>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_19" Level="Info" Message="[&quot;Workbook-&gt; Read Column using SourceFile&quot; + Suffix + &quot; - ok&quot;]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_12">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_9" Item="[&quot;Workbook-&gt; Read Column using SourceFile&quot; + Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_20" Level="Error" Message="[&quot;Workbook-&gt; Read Column using SourceFile&quot; + Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Else>
+      </If>
+      <ui:ReadRow DisplayName="Read row" sap2010:WorkflowViewState.IdRef="ReadRow_1" Password="[password]" Result="[row]" SheetName="Sheet1" StartingCell="A1" WorkbookPath="[Path+&quot;\SourceFile&quot;+Suffix]" />
+      <If Condition="[row(0).toString=&quot;test1&quot;]" sap2010:WorkflowViewState.IdRef="If_11">
+        <If.Then>
+          <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_21" Level="Info" Message="[&quot;Workbook-&gt; Read Row using SourceFile&quot; + Suffix + &quot; - ok&quot;]" />
+        </If.Then>
+        <If.Else>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_13">
+            <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_10" Item="[&quot;Workbook-&gt; Read Row using SourceFile&quot; + Suffix + &quot; - not ok&quot;]" />
+            <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_22" Level="Error" Message="[&quot;Workbook-&gt; Read Row using SourceFile&quot; + Suffix + &quot; - not ok&quot;]" />
+          </Sequence>
+        </If.Else>
+      </If>
+      <If Condition="[(&quot;Test&quot;+Suffix).Contains(&quot;xlsx&quot;)]" sap2010:WorkflowViewState.IdRef="If_14">
+        <If.Then>
+          <Sequence sap2010:WorkflowViewState.IdRef="Sequence_15">
+            <TryCatch DisplayName="Try Catch" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+              <TryCatch.Try>
+                <Sequence sap2010:WorkflowViewState.IdRef="Sequence_17">
+                  <ui:ExcelApplicationScope DisplayName="Create Test Table" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Password="[password]" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]">
+                    <ui:ExcelApplicationScope.Body>
+                      <ActivityAction x:TypeArguments="ui:WorkbookApplication">
+                        <ActivityAction.Argument>
+                          <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
+                        </ActivityAction.Argument>
+                        <Sequence DisplayName="Do" sap2010:WorkflowViewState.IdRef="Sequence_16">
+                          <ui:ExcelCreateTable DisplayName="Create Table" sap2010:WorkflowViewState.IdRef="ExcelCreateTable_1" Range="B1:D11" SheetName="testGetTableRange" TableName="test_table" />
+                        </Sequence>
+                      </ActivityAction>
+                    </ui:ExcelApplicationScope.Body>
+                  </ui:ExcelApplicationScope>
+                  <ui:GetTableRange DisplayName="Get Table Range" sap2010:WorkflowViewState.IdRef="GetTableRange_1" IsPivot="False" Password="[password]" Range="[getRangeRes]" SheetName="testGetTableRange" TableName="test_table" WorkbookPath="[Path+&quot;\Test&quot;+Suffix]" />
+                </Sequence>
+              </TryCatch.Try>
+              <TryCatch.Catches>
+                <Catch x:TypeArguments="s:Exception" sap2010:WorkflowViewState.IdRef="Catch`1_1">
+                  <ActivityAction x:TypeArguments="s:Exception">
+                    <ActivityAction.Argument>
+                      <DelegateInArgument x:TypeArguments="s:Exception" Name="TCexception" />
+                    </ActivityAction.Argument>
+                    <ui:LogMessage DisplayName="Log Message" sap2010:WorkflowViewState.IdRef="LogMessage_25" Level="Error" Message="[&quot;Exception thrown when trying file &quot;+&quot;Test&quot;+Suffix+&quot;. Error Message: &quot;+environment.NewLine+TCexception.ToString]" />
+                  </ActivityAction>
+                </Catch>
+              </TryCatch.Catches>
+            </TryCatch>
+            <If Condition="[getRangeRes = &quot;B1:D11&quot;]" sap2010:WorkflowViewState.IdRef="If_13">
+              <If.Then>
+                <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_23" Level="Info" Message="[&quot;Workbook-&gt; Get Table Range using Test&quot; + Suffix + &quot; - ok&quot;]" />
+              </If.Then>
+              <If.Else>
+                <Sequence sap2010:WorkflowViewState.IdRef="Sequence_14">
+                  <AddToCollection x:TypeArguments="x:String" Collection="[exceptionsList]" DisplayName="Add To Collection" sap2010:WorkflowViewState.IdRef="AddToCollection`1_11" Item="[&quot;Workbook-&gt; Get Table Range using Test&quot; + Suffix + &quot; - not ok&quot;]" />
+                  <ui:LogMessage DisplayName="Log message" sap2010:WorkflowViewState.IdRef="LogMessage_24" Level="Error" Message="[&quot;Workbook-&gt; Get Table Range using Test&quot; + Suffix + &quot; - not ok&quot;]" />
+                </Sequence>
+              </If.Else>
+            </If>
+          </Sequence>
+        </If.Then>
+      </If>
+    </Sequence>
+    <Assign DisplayName="CollectErrors" sap2010:WorkflowViewState.IdRef="Assign_5">
+      <Assign.To>
+        <OutArgument x:TypeArguments="scg:List(x:String)">[ExcList]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="scg:List(x:String)">[exceptionsList]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <sads:DebugSymbol.Symbol>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</sads:DebugSymbol.Symbol>
+  </Sequence>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="242,60" />
+      <sap2010:ViewStateData Id="If_12" sap:VirtualizedContainerService.HintSize="822,208" />
+      <sap2010:ViewStateData Id="ReadCell_1" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="LogMessage_1" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_1" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_2" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_2" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_1" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="WriteCell_1" sap:VirtualizedContainerService.HintSize="822,115" />
+      <sap2010:ViewStateData Id="ReadCell_8" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="LogMessage_3" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_2" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_4" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_5" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_2" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="WriteCell_2" sap:VirtualizedContainerService.HintSize="822,115" />
+      <sap2010:ViewStateData Id="ReadCell_3" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="LogMessage_5" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_3" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_6" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_6" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_3" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="ReadRange_1" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="AddToCollection`1_4" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_9" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_7" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_10" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="If_5" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="WriteRange_1" sap:VirtualizedContainerService.HintSize="822,115" />
+      <sap2010:ViewStateData Id="ReadCell_4" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="LogMessage_11" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_5" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_12" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_8" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_6" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="WriteRange_2" sap:VirtualizedContainerService.HintSize="822,115" />
+      <sap2010:ViewStateData Id="ReadCell_5" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="LogMessage_13" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_6" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_14" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_9" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_7" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="AppendRange_1" sap:VirtualizedContainerService.HintSize="822,115" />
+      <sap2010:ViewStateData Id="ReadCell_6" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="LogMessage_15" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_7" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_16" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_10" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_8" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="ReadCellFormula_1" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="LogMessage_17" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_8" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_18" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_11" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_9" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="ReadColumn_1" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="LogMessage_19" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_9" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_20" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_12" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_10" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="ReadRow_1" sap:VirtualizedContainerService.HintSize="822,87" />
+      <sap2010:ViewStateData Id="LogMessage_21" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_10" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_22" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_13" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_11" sap:VirtualizedContainerService.HintSize="822,425" />
+      <sap2010:ViewStateData Id="ExcelCreateTable_1" sap:VirtualizedContainerService.HintSize="314,87" />
+      <sap2010:ViewStateData Id="Sequence_16" sap:VirtualizedContainerService.HintSize="336,211">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExcelApplicationScope_1" sap:VirtualizedContainerService.HintSize="414,320">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="GetTableRange_1" sap:VirtualizedContainerService.HintSize="414,87" />
+      <sap2010:ViewStateData Id="Sequence_17" sap:VirtualizedContainerService.HintSize="436,571">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="LogMessage_25" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Catch`1_1" sap:VirtualizedContainerService.HintSize="440,160">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="TryCatch_1" sap:VirtualizedContainerService.HintSize="675,1041" />
+      <sap2010:ViewStateData Id="LogMessage_23" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="AddToCollection`1_11" sap:VirtualizedContainerService.HintSize="314,22" />
+      <sap2010:ViewStateData Id="LogMessage_24" sap:VirtualizedContainerService.HintSize="314,91" />
+      <sap2010:ViewStateData Id="Sequence_14" sap:VirtualizedContainerService.HintSize="336,277">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_13" sap:VirtualizedContainerService.HintSize="675,425" />
+      <sap2010:ViewStateData Id="Sequence_15" sap:VirtualizedContainerService.HintSize="697,1630">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="If_14" sap:VirtualizedContainerService.HintSize="822,1778" />
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="844,8845">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_5" sap:VirtualizedContainerService.HintSize="844,60" />
+      <sap2010:ViewStateData Id="Sequence_4" sap:VirtualizedContainerService.HintSize="866,9069">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="xls_1" sap:VirtualizedContainerService.HintSize="906,9189">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="ShouldExpandAll">True</x:Boolean>
+            <x:Boolean x:Key="ShouldCollapseAll">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
